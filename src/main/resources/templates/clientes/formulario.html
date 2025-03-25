@@ -23,12 +23,8 @@
 
           <div class="col-md-6">
             <label class="form-label">Distrito</label>
-            <select class="form-select" th:field="*{distrito}" required>
-              <option value="">Seleccione...</option>
-              <option th:each="d : ${distritos}"
-                      th:value="${d}"
-                      th:text="${d}"></option>
-            </select>
+            <input type="text" class="form-control" th:field="*{distrito}" required>
+            <div class="text-danger" th:errors="*{distrito}"></div>
           </div>
 
           <div class="col-12">

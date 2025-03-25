@@ -11,6 +11,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -34,6 +36,10 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     public ClienteDTO createElement(ClienteRequestDTO element) {
         Cliente dataModification = mapper.mapFromRequestDTO(element);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
+        String id = LocalDateTime.now().format(formatter);
+        dataModification.setId(id);
+        dataModification.setEstado("activo");
         try {
             Cliente savedReward = repository.save(dataModification);
             return mapper.mapFromEntity(savedReward);
