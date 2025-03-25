@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${titulo}">Formulario Inventario</title>
+</head>
+<body class="bg-light">
+<div layout:fragment="content">
+  <div class="card shadow">
+    <div class="card-header bg-primary text-white">
+      <h2 th:text="${titulo}">Formulario de Inventario</h2>
+    </div>
+
+    <div class="card-body">
+      <form th:action="@{/inventarios/guardar}" th:object="${inventarioForm}" method="post">
+        <div class="row g-3">
+          <!-- Dropdown de Insumos -->
+          <div class="col-md-6">
+            <label class="form-label">Insumo</label>
+            <select class="form-select" th:field="*{insumo_id}" required>
+              <option value="">Seleccione un insumo</option>
+              <option th:each="insumo : ${insumos}"
+                      th:value="${insumo.id}"
+                      th:text="${insumo.nombre}"></option>
+            </select>
+          </div>
+
+          <div class="col-md-3">
+            <label class="form-label">Stock</label>
+            <input type="number" class="form-control" th:field="*{stock}" required>
+            <div class="text-danger" th:errors="*{stock}"></div>
+          </div>
+
+          <div class="col-md-3">
+            <label class="form-label">Estado</label>
+            <select class="form-select" th:field="*{estado}" required>
+              <option value="">Seleccione...</option>
+              <option value="activo">Activo</option>
+              <option value="inactivo">Inactivo</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="mt-4 d-flex justify-content-end gap-2">
+          <a th:href="@{/inventarios}" class="btn btn-secondary">
+            <i class="bi bi-x-circle"></i> Cancelar
+          </a>
+          <button type="submit" class="btn btn-primary">
+            <i class="bi bi-save"></i> Guardar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

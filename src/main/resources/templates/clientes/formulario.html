@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}"><head>
+  <meta charset="UTF-8">
+  <title th:text="${titulo}">Formulario Cliente</title>
+</head>
+<body class="bg-light">
+<div layout:fragment="content">
+  <div class="card shadow">
+    <div class="card-header bg-primary text-white">
+      <h2 th:text="${titulo}">Formulario de Cliente</h2>
+    </div>
+
+    <div class="card-body">
+      <form th:action="@{/clientes/guardar}" th:object="${clienteForm}" method="post">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Nombre Completo</label>
+            <input type="text" class="form-control" th:field="*{nombre}" required>
+            <div class="text-danger" th:errors="*{nombre}"></div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Distrito</label>
+            <select class="form-select" th:field="*{distrito}" required>
+              <option value="">Seleccione...</option>
+              <option th:each="d : ${distritos}"
+                      th:value="${d}"
+                      th:text="${d}"></option>
+            </select>
+          </div>
+
+          <div class="col-12">
+            <label class="form-label">Dirección</label>
+            <textarea class="form-control" th:field="*{direccion}" rows="2"></textarea>
+          </div>
+        </div>
+
+        <div class="mt-4 d-flex justify-content-end gap-2">
+          <a th:href="@{/clientes}" class="btn btn-secondary">
+            <i class="bi bi-x-circle"></i> Cancelar
+          </a>
+          <button type="submit" class="btn btn-primary">
+            <i class="bi bi-save"></i> Guardar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

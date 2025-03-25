@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<nav th:fragment="nav" class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm py-3">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/}">
+            <i class="bi bi-house-door"></i> Laundry App
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto d-flex flex-row gap-2">
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/clientes}"
+                       th:classappend="${activeMenu == 'clientes'} ? 'active'">
+                        <i class="bi bi-people"></i> Clientes
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/empleados}"
+                       th:classappend="${activeMenu == 'empleados'} ? 'active'">
+                        <i class="bi bi-person-badge"></i> Empleados
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/tiposInsumo}"
+                       th:classappend="${activeMenu == 'tiposInsumo'} ? 'active'">
+                        <i class="bi bi-tag"></i> Tipos de Insumo
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/insumos}"
+                       th:classappend="${activeMenu == 'insumos'} ? 'active'">
+                        <i class="bi bi-box"></i> Insumos
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/inventarios}"
+                       th:classappend="${activeMenu == 'inventarios'} ? 'active'">
+                        <i class="bi bi-archive"></i> Inventarios
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/tiposLavado}"
+                       th:classappend="${activeMenu == 'tiposLavado'} ? 'active'">
+                        <i class="bi bi-droplet"></i> Tipos de Lavado
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/vehiculos}"
+                       th:classappend="${activeMenu == 'vehiculos'} ? 'active'">
+                        <i class="bi bi-truck-front"></i> Vehículos
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/servicios}"
+                       th:classappend="${activeMenu == 'servicios'} ? 'active'">
+                        <i class="bi bi-clipboard-check"></i> Servicios
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+</body>
+</html>

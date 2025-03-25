@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle Inventario</title>
+</head>
+<body class="bg-light">
+<div layout:fragment="content">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white d-flex justify-content-between">
+            <h2><i class="bi bi-box"></i> Detalle del Inventario</h2>
+            <a th:href="@{/inventarios}" class="btn btn-light">
+                <i class="bi bi-arrow-left"></i> Volver
+            </a>
+        </div>
+
+        <div class="card-body">
+            <h4 th:text="${inventario.insumo.nombre}"></h4>
+            <p><strong>ID:</strong> <span th:text="${inventario.id}"></span></p>
+            <p><strong>Stock:</strong> <span th:text="${inventario.stock}"></span></p>
+            <p><strong>Estado:</strong> <span th:text="${inventario.estado}"></span></p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

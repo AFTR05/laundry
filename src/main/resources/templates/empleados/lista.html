@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+<head>
+  <title>Gestión de Empleados</title>
+</head>
+<body>
+<div layout:fragment="content">
+  <div class="card shadow">
+    <div class="card-header bg-primary text-white d-flex justify-content-between">
+      <h2><i class="bi bi-people-fill"></i> Empleados Registrados</h2>
+      <a th:href="@{/empleados/nuevo}" class="btn btn-light">
+        <i class="bi bi-plus-lg"></i> Nuevo
+      </a>
+    </div>
+
+    <div class="card-body">
+      <div th:replace="~{layout/fragments/mensajes :: mensajes}"></div>
+
+      <table class="table table-hover">
+        <thead class="table-dark">
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Apellidos</th>
+          <th>Fecha Nacimiento</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="empleado : ${empleados}">
+          <td th:text="${empleado.id}"></td>
+          <td th:text="${empleado.nombre}"></td>
+          <td th:text="${empleado.apellidos}"></td>
+          <td th:text="${#temporals.format(empleado.fechaNacimiento, 'dd/MM/yyyy')}"></td>
+          <td>
+            <span class="badge" th:classappend="${empleado.estado == 'activo'} ? 'bg-success' : 'bg-secondary'"
+                  th:text="${empleado.estado}"></span>
+          </td>
+          <td>
+            <a th:href="@{/empleados/ver/} + ${empleado.id}"
+               class="btn btn-sm btn-info"
+               data-bs-toggle="tooltip" title="Ver detalles">
+              <i class="bi bi-eye"></i>
+            </a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</body>
+</html>

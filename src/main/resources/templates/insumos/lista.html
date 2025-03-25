@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+<head>
+  <title th:text="${titulo}">Gestión de Insumos</title>
+</head>
+<body>
+<div layout:fragment="content">
+  <div class="card shadow">
+    <div class="card-header bg-primary text-white d-flex justify-content-between">
+      <h2><i class="bi bi-box"></i> Insumos Registrados</h2>
+      <a th:href="@{/insumos/nuevo}" class="btn btn-light">
+        <i class="bi bi-plus-lg"></i> Nuevo
+      </a>
+    </div>
+
+    <div class="card-body">
+      <div th:replace="~{layout/fragments/mensajes :: mensajes}"></div>
+
+      <table class="table table-hover">
+        <thead class="table-dark">
+        <tr>
+          <th>Id</th>
+          <th>Nombre</th>
+          <th>Precio</th>
+          <th>Estado</th>
+          <th>Tipo</th>
+          <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="insumo : ${insumos}">
+          <td th:text="${insumo.id}"></td>
+          <td th:text="${insumo.nombre}"></td>
+          <td th:text="${insumo.precio}"></td>
+          <td th:text="${insumo.estado}"></td>
+          <td th:text="${insumo.tipoInsumo.nombre}"></td>
+          <td>
+            <a th:href="@{/insumos/ver/} + ${insumo.id}"
+               class="btn btn-sm btn-info">
+              <i class="bi bi-eye"></i>
+            </a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</body>
+</html>

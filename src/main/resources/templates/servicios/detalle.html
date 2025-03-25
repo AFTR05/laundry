@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle Servicio</title>
+</head>
+<body class="bg-light">
+<div layout:fragment="content">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white d-flex justify-content-between">
+            <h2><i class="bi bi-info-circle"></i> Detalle del Servicio</h2>
+            <a th:href="@{/servicios}" class="btn btn-light">
+                <i class="bi bi-arrow-left"></i> Volver
+            </a>
+        </div>
+
+        <div class="card-body">
+            <p><strong>ID:</strong> <span th:text="${servicio.id}"></span></p>
+            <p><strong>Fecha:</strong> <span th:text="${#dates.format(servicio.fecha, 'dd/MM/yyyy')}"></span></p>
+            <p><strong>Empleado que Recibe:</strong> <span th:text="${servicio.empleadoRecibe.nombre}"></span></p>
+            <p><strong>Empleado que Lava:</strong> <span th:text="${servicio.empleadoLava.nombre}"></span></p>
+            <p><strong>Vehículo:</strong> <span th:text="${servicio.tipoVehiculo.placa}"></span></p>
+            <p><strong>Tipo de Lavado:</strong> <span th:text="${servicio.tipoLavado.nombre}"></span></p>
+            <p><strong>Hora Recibe:</strong> <span th:text="${servicio.horaRecibe}"></span></p>
+            <p><strong>Hora Entrega:</strong> <span th:text="${servicio.horaEntrega}"></span></p>
+            <p><strong>Precio:</strong> $<span th:text="${servicio.precio}"></span></p>
+            <p><strong>Estado:</strong> <span th:text="${servicio.estado}"></span></p>
+            <p><strong>Motivo:</strong> <span th:text="${servicio.motivo} ?: 'N/A'"></span></p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
