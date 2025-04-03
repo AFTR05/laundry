@@ -62,4 +62,13 @@ public class TipoLavadoServiceImpl implements TipoLavadoService {
     public TipoLavadoDTO updateElement(TipoLavadoRequestDTO element) {
         return null;
     }
+
+    @Override
+    public void deleteElement(String element) {
+        try{
+            repository.deleteById(element);
+        } catch (Exception e) {
+            throw new TipoLavadoException("Error al eliminar el tipo de lavado");
+        }
+    }
 }

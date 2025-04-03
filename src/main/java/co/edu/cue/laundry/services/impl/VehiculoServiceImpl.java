@@ -2,10 +2,7 @@ package co.edu.cue.laundry.services.impl;
 
 import co.edu.cue.laundry.domain.entities.TipoLavado;
 import co.edu.cue.laundry.domain.entities.Vehiculo;
-import co.edu.cue.laundry.infrastructure.exception.ClienteException;
-import co.edu.cue.laundry.infrastructure.exception.InsumoException;
-import co.edu.cue.laundry.infrastructure.exception.TipoLavadoException;
-import co.edu.cue.laundry.infrastructure.exception.VehiculoException;
+import co.edu.cue.laundry.infrastructure.exception.*;
 import co.edu.cue.laundry.infrastructure.repository.ClienteRepository;
 import co.edu.cue.laundry.infrastructure.repository.TipoLavadoRepository;
 import co.edu.cue.laundry.infrastructure.repository.VehiculoRepository;
@@ -61,5 +58,14 @@ public class VehiculoServiceImpl implements VehiculoService{
     @Override
     public VehiculoDTO updateElement(VehiculoRequestDTO element) {
         return null;
+    }
+
+    @Override
+    public void deleteElement(String element) {
+        try{
+            repository.deleteById(element);
+        } catch (Exception e) {
+            throw new VehiculoException("Error al eliminar el vehiculo");
+        }
     }
 }

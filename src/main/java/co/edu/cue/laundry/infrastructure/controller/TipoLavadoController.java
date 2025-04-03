@@ -69,4 +69,11 @@ public class TipoLavadoController {
         model.addAttribute("titulo", "Detalles del Tipo de lavado");
         return "tiposLavado/detalle";
     }
+
+    @PostMapping("/delete/{tipoLavado}")
+    public String eliminarTipoLavado(@PathVariable String tipoLavado, RedirectAttributes redirectAttributes) {
+        service.deleteElement(tipoLavado);
+        redirectAttributes.addFlashAttribute("success", "Tipo de lavado eliminado exitosamente");
+        return "redirect:/tiposLavado";
+    }
 }

@@ -1,10 +1,7 @@
 package co.edu.cue.laundry.infrastructure.controller;
 
 import co.edu.cue.laundry.infrastructure.utils.ResponseMessageUtil;
-import co.edu.cue.laundry.mapping.dtos.EmpleadoDTO;
-import co.edu.cue.laundry.mapping.dtos.EmpleadoRequestDTO;
-import co.edu.cue.laundry.mapping.dtos.TipoInsumoDTO;
-import co.edu.cue.laundry.mapping.dtos.TipoInsumoRequestDTO;
+import co.edu.cue.laundry.mapping.dtos.*;
 import co.edu.cue.laundry.services.EmpleadoService;
 import co.edu.cue.laundry.services.TipoInsumoService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -67,5 +64,12 @@ public class TipoInsumoController {
         model.addAttribute("tiposInsumo", tipoInsumoDTO);
         model.addAttribute("titulo", "Detalles del Tipo de Insumo");
         return "tiposInsumo/detalle";
+    }
+
+    @PostMapping("/delete/{tipoInsumo}")
+    public String eliminarTipoInsumo(@PathVariable String tipoInsumo, RedirectAttributes redirectAttributes) {
+        service.deleteElement(tipoInsumo);
+        redirectAttributes.addFlashAttribute("success", "Tipo de insumo eliminado exitosamente");
+        return "redirect:/tiposInsumo";
     }
 }

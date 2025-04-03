@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/base}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Detalle Inventario</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
 <div layout:fragment="content">
@@ -17,10 +16,39 @@
         </div>
 
         <div class="card-body">
-            <h4 th:text="${inventario.insumo.nombre}"></h4>
-            <p><strong>ID:</strong> <span th:text="${inventario.id}"></span></p>
-            <p><strong>Stock:</strong> <span th:text="${inventario.stock}"></span></p>
-            <p><strong>Estado:</strong> <span th:text="${inventario.estado}"></span></p>
+            <div class="row mb-4">
+                <div class="col-md-8">
+                    <h3 th:text="${inventario.insumo.nombre}"></h3>
+                    <p><strong>ID:</strong> <span th:text="${inventario.id}"></span></p>
+                </div>
+                <div class="col-md-4 text-end">
+                    <span class="badge fs-6"
+                          th:classappend="${inventario.estado == 'activo'} ? 'bg-success' : 'bg-secondary'"
+                          th:text="${inventario.estado}"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card mb-3">
+                        <div class="card-header bg-light">Información</div>
+                        <div class="card-body">
+                            <p><strong>Stock:</strong> <span th:text="${inventario.stock}"></span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-light">Acciones</div>
+                        <div class="card-body text-center">
+                            <a th:href="@{/inventarios/editar/} + ${inventario.id}"
+                               class="btn btn-warning me-2">
+                                <i class="bi bi-pencil"></i> Editar
+                            </a>
+                        </div>
+                    </div>
+                </div>
         </div>
     </div>
 </div>

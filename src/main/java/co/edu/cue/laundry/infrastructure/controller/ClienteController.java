@@ -2,6 +2,7 @@ package co.edu.cue.laundry.infrastructure.controller;
 
 import co.edu.cue.laundry.mapping.dtos.ClienteDTO;
 import co.edu.cue.laundry.mapping.dtos.ClienteRequestDTO;
+import co.edu.cue.laundry.mapping.dtos.EmpleadoRequestDTO;
 import co.edu.cue.laundry.services.ClienteService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -63,4 +64,12 @@ public class ClienteController {
         model.addAttribute("titulo", "Detalles del Cliente");
         return "clientes/detalle";
     }
+
+    @PostMapping("/delete/{id}")
+    public String eliminarCliente(@PathVariable String id, RedirectAttributes redirectAttributes) {
+        service.deleteElement(id);
+        redirectAttributes.addFlashAttribute("success", "Cliente eliminado exitosamente");
+        return "redirect:/clientes";
+    }
+
 }

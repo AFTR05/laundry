@@ -69,4 +69,13 @@ public class ServicioServiceImpl implements ServicioService {
     public ServicioDTO updateElement(ServicioRequestDTO element) {
         return null;
     }
+
+    @Override
+    public void deleteElement(Integer element) {
+        try{
+            repository.deleteById(element);
+        } catch (Exception e) {
+            throw new ServicioException("Error al eliminar el servicio");
+        }
+    }
 }

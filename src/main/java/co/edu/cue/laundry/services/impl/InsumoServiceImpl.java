@@ -3,6 +3,7 @@ package co.edu.cue.laundry.services.impl;
 import co.edu.cue.laundry.domain.entities.Empleado;
 import co.edu.cue.laundry.domain.entities.Insumo;
 import co.edu.cue.laundry.infrastructure.exception.ClienteException;
+import co.edu.cue.laundry.infrastructure.exception.EmpleadoException;
 import co.edu.cue.laundry.infrastructure.exception.InsumoException;
 import co.edu.cue.laundry.infrastructure.exception.TipoInsumoException;
 import co.edu.cue.laundry.infrastructure.repository.EmpleadoRepository;
@@ -61,5 +62,14 @@ public class InsumoServiceImpl implements InsumoService {
     @Override
     public InsumoDTO updateElement(InsumoRequestDTO element) {
         return null;
+    }
+
+    @Override
+    public void deleteElement(String element) {
+        try{
+            repository.deleteById(element);
+        } catch (Exception e) {
+            throw new InsumoException("Error al eliminar el insumo");
+        }
     }
 }

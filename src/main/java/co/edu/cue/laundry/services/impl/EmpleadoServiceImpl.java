@@ -51,4 +51,13 @@ public class EmpleadoServiceImpl implements EmpleadoService {
     public EmpleadoDTO updateElement(EmpleadoRequestDTO element) {
         return null;
     }
+
+    @Override
+    public void deleteElement(String element) {
+        try{
+            repository.deleteById(element);
+        } catch (Exception e) {
+            throw new EmpleadoException("Error al eliminar el empleado");
+        }
+    }
 }

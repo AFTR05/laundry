@@ -52,4 +52,13 @@ public class ClienteServiceImpl implements ClienteService {
     public ClienteDTO updateElement(ClienteRequestDTO element) {
         return null;
     }
+
+    @Override
+    public void deleteElement(String element) {
+        try{
+            repository.deleteById(element);
+        } catch (Exception e) {
+            throw new ClienteException("Error al eliminar el cliente");
+        }
+    }
 }

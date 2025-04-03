@@ -70,4 +70,11 @@ public class EmpleadoController {
         model.addAttribute("titulo", "Detalles del Empleado");
         return "empleados/detalle";
     }
+
+    @PostMapping("/delete/{empleado}")
+    public String eliminarEmpleado(@PathVariable String empleado,RedirectAttributes redirectAttributes) {
+        service.deleteElement(empleado);
+        redirectAttributes.addFlashAttribute("success", "Empleado eliminado exitosamente");
+        return "redirect:/empleados";
+    }
 }

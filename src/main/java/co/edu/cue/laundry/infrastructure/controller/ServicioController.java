@@ -80,4 +80,11 @@ public class ServicioController {
         model.addAttribute("titulo", "Detalles del Servicio");
         return "servicios/detalle";
     }
+
+    @PostMapping("/delete/{servicio}")
+    public String eliminarServicio(@PathVariable Integer servicio,RedirectAttributes redirectAttributes) {
+        service.deleteElement(servicio);
+        redirectAttributes.addFlashAttribute("success", "Servicio eliminado exitosamente");
+        return "redirect:/servicios";
+    }
 }

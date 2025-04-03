@@ -1,9 +1,6 @@
 package co.edu.cue.laundry.services;
 
-import co.edu.cue.laundry.mapping.dtos.EmpleadoDTO;
-import co.edu.cue.laundry.mapping.dtos.EmpleadoRequestDTO;
-import co.edu.cue.laundry.mapping.dtos.InsumoDTO;
-import co.edu.cue.laundry.mapping.dtos.InsumoRequestDTO;
+import co.edu.cue.laundry.mapping.dtos.*;
 
 import java.util.List;
 
@@ -12,4 +9,5 @@ public interface InsumoService {
     InsumoDTO getOneElement(String id);
     InsumoDTO createElement(InsumoRequestDTO element);
     InsumoDTO updateElement(InsumoRequestDTO element);
+    void deleteElement(String id);
 }

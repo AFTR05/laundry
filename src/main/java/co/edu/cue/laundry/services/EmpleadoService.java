@@ -1,5 +1,6 @@
 package co.edu.cue.laundry.services;
 
+import co.edu.cue.laundry.mapping.dtos.ClienteRequestDTO;
 import co.edu.cue.laundry.mapping.dtos.EmpleadoDTO;
 import co.edu.cue.laundry.mapping.dtos.EmpleadoRequestDTO;
 
@@ -10,4 +11,5 @@ public interface EmpleadoService {
     EmpleadoDTO getOneElement(String id);
     EmpleadoDTO createElement(EmpleadoRequestDTO element);
     EmpleadoDTO updateElement(EmpleadoRequestDTO element);
+    void deleteElement(String id);
 }

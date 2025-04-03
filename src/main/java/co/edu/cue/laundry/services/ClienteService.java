@@ -12,4 +12,5 @@ public interface ClienteService {
     ClienteDTO getOneElement(String id);
     ClienteDTO createElement(ClienteRequestDTO element);
     ClienteDTO updateElement(ClienteRequestDTO element);
+    void deleteElement(String id);
 }

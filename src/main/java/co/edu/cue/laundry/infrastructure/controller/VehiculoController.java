@@ -68,4 +68,11 @@ public class VehiculoController {
         model.addAttribute("titulo", "Detalles del Vehiculo");
         return "vehiculos/detalle";
     }
+
+    @PostMapping("/delete/{vehiculo}")
+    public String eliminarVehiculo(@PathVariable String vehiculo, RedirectAttributes redirectAttributes) {
+        service.deleteElement(vehiculo);
+        redirectAttributes.addFlashAttribute("success", "Vehiculo eliminado exitosamente");
+        return "redirect:/vehiculos";
+    }
 }

@@ -67,4 +67,11 @@ public class InventarioController {
         model.addAttribute("titulo", "Detalles del Inventario");
         return "inventarios/detalle";
     }
+
+    @PostMapping("/delete/{inventario}")
+    public String eliminarInventario(@PathVariable Integer inventario,RedirectAttributes redirectAttributes) {
+        service.deleteElement(inventario);
+        redirectAttributes.addFlashAttribute("success", "Inventario eliminado exitosamente");
+        return "redirect:/inventarios";
+    }
 }

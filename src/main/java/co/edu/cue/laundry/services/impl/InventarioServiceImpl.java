@@ -58,4 +58,13 @@ public class InventarioServiceImpl implements InventarioService {
     public InventarioDTO updateElement(InventarioRequestDTO element) {
         return null;
     }
+
+    @Override
+    public void deleteElement(Integer element) {
+        try{
+            repository.deleteById(element);
+        } catch (Exception e) {
+            throw new InventarioException("Error al eliminar el inventario");
+        }
+    }
 }

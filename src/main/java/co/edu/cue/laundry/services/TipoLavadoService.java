@@ -1,5 +1,6 @@
 package co.edu.cue.laundry.services;
 
+import co.edu.cue.laundry.mapping.dtos.ClienteRequestDTO;
 import co.edu.cue.laundry.mapping.dtos.TipoLavadoDTO;
 import co.edu.cue.laundry.mapping.dtos.TipoLavadoRequestDTO;
 
@@ -10,4 +11,5 @@ public interface TipoLavadoService {
     TipoLavadoDTO getOneElement(String id);
     TipoLavadoDTO createElement(TipoLavadoRequestDTO element);
     TipoLavadoDTO updateElement(TipoLavadoRequestDTO element);
+    void deleteElement(String id);
 }

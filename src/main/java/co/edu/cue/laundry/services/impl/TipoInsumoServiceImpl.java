@@ -2,6 +2,7 @@ package co.edu.cue.laundry.services.impl;
 
 import co.edu.cue.laundry.domain.entities.Servicio;
 import co.edu.cue.laundry.domain.entities.TipoInsumo;
+import co.edu.cue.laundry.infrastructure.exception.InsumoException;
 import co.edu.cue.laundry.infrastructure.exception.ServicioException;
 import co.edu.cue.laundry.infrastructure.exception.TipoInsumoException;
 import co.edu.cue.laundry.infrastructure.repository.ServicioRepository;
@@ -48,5 +49,14 @@ public class TipoInsumoServiceImpl implements TipoInsumoService {
     @Override
     public TipoInsumoDTO updateElement(TipoInsumoRequestDTO element) {
         return null;
+    }
+
+    @Override
+    public void deleteElement(String element) {
+        try{
+            repository.deleteById(element);
+        } catch (Exception e) {
+            throw new TipoInsumoException("Error al eliminar el tipo de insumo");
+        }
     }
 }

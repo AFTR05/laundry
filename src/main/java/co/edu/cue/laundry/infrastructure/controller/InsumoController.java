@@ -72,4 +72,11 @@ public class InsumoController {
         model.addAttribute("titulo", "Detalles del Insumo");
         return "insumos/detalle";
     }
+
+    @PostMapping("/delete/{insumo}")
+    public String eliminarInsumo(@PathVariable String insumo,RedirectAttributes redirectAttributes) {
+        service.deleteElement(insumo);
+        redirectAttributes.addFlashAttribute("success", "Insumo eliminado exitosamente");
+        return "redirect:/insumos";
+    }
 }
