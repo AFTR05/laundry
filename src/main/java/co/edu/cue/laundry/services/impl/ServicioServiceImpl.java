@@ -67,7 +67,26 @@ public class ServicioServiceImpl implements ServicioService {
 
     @Override
     public ServicioDTO updateElement(ServicioRequestDTO element) {
-        return null;
+        try {
+            Empleado empRecibe = empleadoRepository.findById(element.empleadoRecibeId())
+                    .orElseThrow(() -> new EmpleadoException("Empleado not found"));
+            Empleado empLava = empleadoRepository.findById(element.empleadoLavaId())
+                    .orElseThrow(() -> new EmpleadoException("Empleado not found"));
+            Vehiculo vehiculo = vehiculoRepository.findById(element.tipoVehiculoId())
+                    .orElseThrow(() -> new VehiculoException("Vehiculo not found"));
+            TipoLavado tipoLavado = tipoLavadoRepository.findById(element.tipoLavadoId())
+                    .orElseThrow(() -> new TipoLavadoException("Tipo de lavado not found"));
+            Servicio dataModification = mapper.mapFromRequestDTO(element);
+            dataModification.setPlaca(vehiculo.getPlaca());
+            dataModification.setEmpleadoRecibe(empRecibe);
+            dataModification.setEmpleadoLava(empLava);
+            dataModification.setTipoVehiculo(vehiculo);
+            dataModification.setTipoLavado(tipoLavado);
+            Servicio savedservicio = repository.save(dataModification);
+            return mapper.mapFromEntity(savedservicio);
+        } catch (Exception e) {
+            throw new ServicioException("Error while saving the service");
+        }
     }
 
     @Override

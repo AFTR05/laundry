@@ -77,4 +77,37 @@ public class EmpleadoController {
         redirectAttributes.addFlashAttribute("success", "Empleado eliminado exitosamente");
         return "redirect:/empleados";
     }
+
+    @GetMapping("/editar/{id}")
+    public String mostrarFormularioEditar(@PathVariable String id, Model model) {
+        EmpleadoDTO empleado = service.getOneElement(id);
+        EmpleadoRequestDTO empleadoForm = new EmpleadoRequestDTO(
+                empleado.id(),
+                empleado.nombre(),
+                empleado.apellidos(),
+                empleado.fechaNacimiento(),
+                empleado.estado()
+        );
+        model.addAttribute("empleadoForm", empleadoForm);
+        model.addAttribute("titulo", "Editar Empleado");
+        return "empleados/formulario_editar";
+    }
+
+    @PostMapping("/editar")
+    public String editarEmpleado(@Valid @ModelAttribute("empleadoForm") EmpleadoRequestDTO empleadoRequestDTO,
+                                 BindingResult result,
+                                 Model model,
+                                 RedirectAttributes redirectAttributes) {
+
+        if(result.hasErrors()) {
+            model.addAttribute("titulo", "Editar Empleado");
+            return "empleados/formulario_editar";
+        }
+
+        service.updateElement(empleadoRequestDTO);
+        redirectAttributes.addFlashAttribute("success", "Empleado actualizado exitosamente");
+        return "redirect:/empleados";
+    }
+
+
 }

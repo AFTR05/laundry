@@ -79,4 +79,39 @@ public class InsumoController {
         redirectAttributes.addFlashAttribute("success", "Insumo eliminado exitosamente");
         return "redirect:/insumos";
     }
+
+    @GetMapping("/editar/{id}")
+    public String mostrarFormularioEditar(@PathVariable String id, Model model) {
+        InsumoDTO insumo = service.getOneElement(id);
+        InsumoRequestDTO form = new InsumoRequestDTO(
+                insumo.id(),
+                insumo.nombre(),
+                insumo.precio(),
+                insumo.estado(),
+                insumo.tipoInsumo().getId()
+        );
+        model.addAttribute("insumoForm", form);
+        model.addAttribute("tipoInsumos", tipoInsumoService.getAllElements());
+        model.addAttribute("titulo", "Editar Insumo");
+        return "insumos/formulario_editar";
+    }
+
+    @PostMapping("/editar")
+    public String editarInsumo(@Valid @ModelAttribute("insumoForm") InsumoRequestDTO insumoRequestDTO,
+                               BindingResult result,
+                               Model model,
+                               RedirectAttributes redirectAttributes) {
+
+        if (result.hasErrors()) {
+            model.addAttribute("titulo", "Editar Insumo");
+            model.addAttribute("tipoInsumos", tipoInsumoService.getAllElements());
+            return "insumos/formulario_editar";
+        }
+
+        service.updateElement(insumoRequestDTO);
+        redirectAttributes.addFlashAttribute("success", "Insumo actualizado exitosamente");
+        return "redirect:/insumos";
+    }
+
+
 }

@@ -72,4 +72,37 @@ public class ClienteController {
         return "redirect:/clientes";
     }
 
+    @GetMapping("/editar/{id}")
+    public String mostrarFormularioEditar(@PathVariable String id, Model model) {
+        ClienteDTO cliente = service.getOneElement(id);
+        ClienteRequestDTO clienteForm = new ClienteRequestDTO(
+                cliente.id(),
+                cliente.nombre(),
+                cliente.distrito(),
+                cliente.direccion(),
+                cliente.estado()
+        );
+        model.addAttribute("clienteForm", clienteForm);
+        model.addAttribute("titulo", "Editar Cliente");
+        return "clientes/formulario_editar";
+    }
+
+    @PostMapping("/editar")
+    public String editarCliente(@Valid @ModelAttribute("clienteForm") ClienteRequestDTO clienteRequest,
+                                BindingResult result,
+                                Model model,
+                                RedirectAttributes redirectAttributes) {
+
+        if(result.hasErrors()) {
+            model.addAttribute("titulo", "Editar Cliente");
+            return "clientes/formulario_editar";
+        }
+
+        service.updateElement(clienteRequest);
+        redirectAttributes.addFlashAttribute("success", "Cliente actualizado exitosamente");
+        return "redirect:/clientes";
+    }
+
+
+
 }

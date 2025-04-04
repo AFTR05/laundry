@@ -72,4 +72,35 @@ public class TipoInsumoController {
         redirectAttributes.addFlashAttribute("success", "Tipo de insumo eliminado exitosamente");
         return "redirect:/tiposInsumo";
     }
+
+    @GetMapping("/editar/{id}")
+    public String mostrarFormularioEditar(@PathVariable String id, Model model) {
+        TipoInsumoDTO tipo = service.getOneElement(id);
+        TipoInsumoRequestDTO tipoInsumoForm = new TipoInsumoRequestDTO(
+                tipo.id(),
+                tipo.nombre(),
+                tipo.descripcion(),
+                tipo.estado()
+        );
+        model.addAttribute("tipoInsumoForm", tipoInsumoForm);
+        model.addAttribute("titulo", "Editar Tipo de Insumo");
+        return "tiposInsumo/formulario_editar";
+    }
+
+    @PostMapping("/editar")
+    public String editarTipoInsumo(@Valid @ModelAttribute("tipoInsumoForm") TipoInsumoRequestDTO tipoInsumoForm,
+                                   BindingResult result,
+                                   Model model,
+                                   RedirectAttributes redirectAttributes) {
+        if (result.hasErrors()) {
+            model.addAttribute("titulo", "Editar Tipo de Insumo");
+            return "tiposInsumo/formulario_editar";
+        }
+
+        service.updateElement(tipoInsumoForm);
+        redirectAttributes.addFlashAttribute("success", "Tipo de Insumo actualizado exitosamente");
+        return "redirect:/tiposInsumo";
+    }
+
+
 }

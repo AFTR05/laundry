@@ -21,6 +21,8 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
+
 @Service
 @AllArgsConstructor
 public class InsumoServiceImpl implements InsumoService {
@@ -61,7 +63,18 @@ public class InsumoServiceImpl implements InsumoService {
 
     @Override
     public InsumoDTO updateElement(InsumoRequestDTO element) {
-        return null;
+        return tipoInsumoRepository.findById(element.tipoInsumoId())
+                .map(object -> {
+                    Insumo dataModification = mapper.mapFromRequestDTO(element);
+                    dataModification.setTipoInsumo(object);
+                    try {
+                        Insumo savedProduct = repository.save(dataModification);
+                        return mapper.mapFromEntity(savedProduct);
+                    } catch (Exception e) {
+                        throw new InsumoException("Error al guardar el insumo");
+                    }
+                })
+                .orElseThrow(() -> new TipoInsumoException("Tipo de insumo no encontrado"));
     }
 
     @Override

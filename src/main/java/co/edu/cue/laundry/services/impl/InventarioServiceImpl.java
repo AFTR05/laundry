@@ -1,5 +1,6 @@
 package co.edu.cue.laundry.services.impl;
 
+import co.edu.cue.laundry.domain.entities.Empleado;
 import co.edu.cue.laundry.domain.entities.Insumo;
 import co.edu.cue.laundry.domain.entities.Inventario;
 import co.edu.cue.laundry.infrastructure.exception.InsumoException;
@@ -56,7 +57,8 @@ public class InventarioServiceImpl implements InventarioService {
 
     @Override
     public InventarioDTO updateElement(InventarioRequestDTO element) {
-        return null;
+        Inventario dataModified = mapper.mapFromRequestDTO(element);
+        return mapper.mapFromEntity(repository.save(dataModified));
     }
 
     @Override

@@ -57,7 +57,18 @@ public class VehiculoServiceImpl implements VehiculoService{
 
     @Override
     public VehiculoDTO updateElement(VehiculoRequestDTO element) {
-        return null;
+        return clienteRepository.findById(element.cliente_id())
+                .map(cliente -> {
+                    Vehiculo dataModification = mapper.mapFromRequestDTO(element);
+                    dataModification.setCliente(cliente);
+                    try {
+                        Vehiculo savedVehiculo = repository.save(dataModification);
+                        return mapper.mapFromEntity(savedVehiculo);
+                    } catch (Exception e) {
+                        throw new VehiculoException("Error al guardar el vehiculo");
+                    }
+                })
+                .orElseThrow(() -> new ClienteException("cliente no encontrado"));
     }
 
     @Override
