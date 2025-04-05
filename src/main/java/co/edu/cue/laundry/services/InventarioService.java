@@ -8,6 +8,6 @@ public interface InventarioService {
     List<InventarioDTO> getAllElements();
     InventarioDTO getOneElement(Integer id);
     InventarioDTO createElement(InventarioRequestDTO element);
-    InventarioDTO updateElement(InventarioRequestDTO element);
+    InventarioDTO updateElement(InventarioUpdateDTO element);
     void deleteElement(Integer id);
 }

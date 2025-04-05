@@ -74,4 +74,37 @@ public class InventarioController {
         redirectAttributes.addFlashAttribute("success", "Inventario eliminado exitosamente");
         return "redirect:/inventarios";
     }
+
+    @GetMapping("/editar/{id}")
+    public String mostrarFormularioEditar(@PathVariable Integer id, Model model) {
+        InventarioDTO inventario = service.getOneElement(id);
+        InventarioUpdateDTO form = new InventarioUpdateDTO(
+                inventario.id(),
+                inventario.insumo().getId(),
+                inventario.stock(),
+                inventario.estado()
+        );
+        model.addAttribute("inventarioForm", form);
+        model.addAttribute("insumos", insumoService.getAllElements());
+        model.addAttribute("titulo", "Editar Inventario");
+        return "inventarios/formulario_editar";
+    }
+
+    @PostMapping("/editar")
+    public String editarInventario(@Valid @ModelAttribute("inventarioForm") InventarioUpdateDTO updateDTO,
+                                   BindingResult result,
+                                   Model model,
+                                   RedirectAttributes redirectAttributes) {
+
+        if (result.hasErrors()) {
+            model.addAttribute("titulo", "Editar Inventario");
+            model.addAttribute("insumos", insumoService.getAllElements());
+            return "inventarios/formulario_editar";
+        }
+
+        service.updateElement(updateDTO);
+        redirectAttributes.addFlashAttribute("success", "Inventario actualizado exitosamente");
+        return "redirect:/inventarios";
+    }
+
 }

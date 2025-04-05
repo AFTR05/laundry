@@ -10,6 +10,7 @@ import co.edu.cue.laundry.infrastructure.repository.InsumoRepository;
 import co.edu.cue.laundry.infrastructure.repository.InventarioRepository;
 import co.edu.cue.laundry.mapping.dtos.InventarioDTO;
 import co.edu.cue.laundry.mapping.dtos.InventarioRequestDTO;
+import co.edu.cue.laundry.mapping.dtos.InventarioUpdateDTO;
 import co.edu.cue.laundry.mapping.mappers.InsumoMapper;
 import co.edu.cue.laundry.mapping.mappers.InventarioMapper;
 import co.edu.cue.laundry.services.InventarioService;
@@ -56,9 +57,19 @@ public class InventarioServiceImpl implements InventarioService {
     }
 
     @Override
-    public InventarioDTO updateElement(InventarioRequestDTO element) {
-        Inventario dataModified = mapper.mapFromRequestDTO(element);
-        return mapper.mapFromEntity(repository.save(dataModified));
+    public InventarioDTO updateElement(InventarioUpdateDTO element) {
+        return insumoRepository.findById(element.insumo_id())
+                .map(object -> {
+                    Inventario dataModification = mapper.mapFromUpdateDTO(element);
+                    dataModification.setInsumo(object);
+                    try {
+                        Inventario savedProduct = repository.save(dataModification);
+                        return mapper.mapFromEntity(savedProduct);
+                    } catch (Exception e) {
+                        throw new InventarioException("Error al guardar el inventario");
+                    }
+                })
+                .orElseThrow(() -> new InsumoException("Insumo no encontrado"));
     }
 
     @Override

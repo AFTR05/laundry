@@ -5,6 +5,7 @@ import co.edu.cue.laundry.infrastructure.exception.*;
 import co.edu.cue.laundry.infrastructure.repository.*;
 import co.edu.cue.laundry.mapping.dtos.ServicioDTO;
 import co.edu.cue.laundry.mapping.dtos.ServicioRequestDTO;
+import co.edu.cue.laundry.mapping.dtos.ServicioUpdateDTO;
 import co.edu.cue.laundry.mapping.mappers.InventarioMapper;
 import co.edu.cue.laundry.mapping.mappers.ServicioMapper;
 import co.edu.cue.laundry.services.EmpleadoService;
@@ -66,7 +67,7 @@ public class ServicioServiceImpl implements ServicioService {
     }
 
     @Override
-    public ServicioDTO updateElement(ServicioRequestDTO element) {
+    public ServicioDTO updateElement(ServicioUpdateDTO element) {
         try {
             Empleado empRecibe = empleadoRepository.findById(element.empleadoRecibeId())
                     .orElseThrow(() -> new EmpleadoException("Empleado not found"));
@@ -76,7 +77,7 @@ public class ServicioServiceImpl implements ServicioService {
                     .orElseThrow(() -> new VehiculoException("Vehiculo not found"));
             TipoLavado tipoLavado = tipoLavadoRepository.findById(element.tipoLavadoId())
                     .orElseThrow(() -> new TipoLavadoException("Tipo de lavado not found"));
-            Servicio dataModification = mapper.mapFromRequestDTO(element);
+            Servicio dataModification = mapper.mapFromUpdateDTO(element);
             dataModification.setPlaca(vehiculo.getPlaca());
             dataModification.setEmpleadoRecibe(empRecibe);
             dataModification.setEmpleadoLava(empLava);

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${titulo}">Formulario Servicio</title>
+</head>
+<body class="bg-light">
+<div layout:fragment="content">
+  <div class="card shadow">
+    <div class="card-header bg-primary text-white">
+      <h2 th:text="${titulo}">Formulario Servicio</h2>
+    </div>
+
+    <div class="card-body">
+      <form th:action="@{/servicios/editar}" th:object="${servicioForm}" method="post">
+        <input type="hidden" th:name="id" th:value="${servicioForm.id}">
+        <div class="row g-3">
+
+          <div class="col-md-6">
+            <label class="form-label">Fecha</label>
+            <input type="date" class="form-control"
+                   th:name="fecha"
+                   th:value="${#dates.format(servicioForm.fecha, 'yyyy-MM-dd')}" required>
+          </div>
+
+          <input type="hidden" th:field="*{placa}" th:value="${servicioForm.placa}">
+
+          <!-- Empleado que recibe -->
+          <div class="col-md-4">
+            <label class="form-label">Empleado que Recibe</label>
+            <select class="form-select" th:field="*{empleadoRecibeId}" required>
+              <option value="">Seleccione...</option>
+              <option th:each="emp : ${empleados}"
+                      th:value="${emp.id}"
+                      th:text="${emp.nombre}"
+                      th:selected="${emp.id == servicioForm.empleadoRecibeId()}"></option>
+            </select>
+          </div>
+
+          <!-- Empleado que lava -->
+          <div class="col-md-4">
+            <label class="form-label">Empleado que Lava</label>
+            <select class="form-select" th:field="*{empleadoLavaId}" required>
+              <option value="">Seleccione...</option>
+              <option th:each="emp : ${empleados}"
+                      th:value="${emp.id}"
+                      th:text="${emp.nombre}"
+                      th:selected="${emp.id == servicioForm.empleadoLavaId()}"></option>
+            </select>
+          </div>
+
+          <!-- Vehículo -->
+          <div class="col-md-6">
+            <label class="form-label">Vehículo</label>
+            <select class="form-select" th:field="*{tipoVehiculoId}" required>
+              <option value="">Seleccione...</option>
+              <option th:each="v : ${vehiculos}"
+                      th:value="${v.id}"
+                      th:text="${v.placa}"
+                      th:selected="${v.id == servicioForm.tipoVehiculoId()}"></option>
+            </select>
+          </div>
+
+          <!-- Tipo de Lavado -->
+          <div class="col-md-6">
+            <label class="form-label">Tipo de Lavado</label>
+            <select class="form-select" th:field="*{tipoLavadoId}" required>
+              <option value="">Seleccione...</option>
+              <option th:each="tl : ${tiposLavado}"
+                      th:value="${tl.id}"
+                      th:text="${tl.nombre}"
+                      th:selected="${tl.id == servicioForm.tipoLavadoId()}"></option>
+            </select>
+          </div>
+
+          <!-- Hora Recibe -->
+          <div class="col-md-6">
+            <label class="form-label">Hora Recibe</label>
+            <input type="time" class="form-control" th:field="*{horaRecibe}" th:value="${servicioForm.horaRecibe()}" required>
+          </div>
+
+          <!-- Hora Entrega -->
+          <div class="col-md-6">
+            <label class="form-label">Hora Entrega</label>
+            <input type="time" class="form-control" th:field="*{horaEntrega}" th:value="${servicioForm.horaEntrega()}" required>
+          </div>
+
+          <!-- Precio -->
+          <div class="col-md-6">
+            <label class="form-label">Precio</label>
+            <input type="number" class="form-control" step="0.01" th:field="*{precio}" th:value="${servicioForm.precio()}" required>
+          </div>
+
+          <!-- Estado -->
+          <div class="col-md-6">
+            <label class="form-label">Estado</label>
+            <select class="form-select" th:field="*{estado}" required>
+              <option value="">Seleccione...</option>
+              <option value="activo">Activo</option>
+              <option value="inactivo">Inactivo</option>
+              <option value="terminado">Terminado</option>
+              <option value="cancelado">Cancelado</option>
+            </select>
+          </div>
+
+          <!-- Motivo (opcional) -->
+          <div class="col-md-12">
+            <label class="form-label">Motivo (si aplica)</label>
+            <textarea class="form-control" th:field="*{motivo}" rows="2"></textarea>
+          </div>
+
+        </div>
+
+        <div class="mt-4 d-flex justify-content-end gap-2">
+          <a th:href="@{/servicios}" class="btn btn-secondary">
+            <i class="bi bi-x-circle"></i> Cancelar
+          </a>
+          <button type="submit" class="btn btn-primary">
+            <i class="bi bi-save"></i> Guardar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>
