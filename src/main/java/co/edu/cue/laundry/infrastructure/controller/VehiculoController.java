@@ -75,4 +75,40 @@ public class VehiculoController {
         redirectAttributes.addFlashAttribute("success", "Vehiculo eliminado exitosamente");
         return "redirect:/vehiculos";
     }
+
+    @GetMapping("/editar/{id}")
+    public String mostrarFormularioEditar(@PathVariable String id, Model model) {
+        VehiculoDTO vehiculo = service.getOneElement(id);
+        VehiculoRequestDTO form = new VehiculoRequestDTO(
+                vehiculo.id(),
+                vehiculo.tipo(),
+                vehiculo.descripcion(),
+                vehiculo.estado(),
+                vehiculo.cliente().getId(),
+                vehiculo.placa()
+        );
+        model.addAttribute("vehiculoForm", form);
+        model.addAttribute("clientes", clienteService.getAllElements());
+        model.addAttribute("titulo", "Editar Vehículo");
+        return "vehiculos/formulario_editar";
+    }
+
+    @PostMapping("/editar")
+    public String editarVehiculo(@Valid @ModelAttribute("vehiculoForm") VehiculoRequestDTO vehiculoRequestDTO,
+                                 BindingResult result,
+                                 Model model,
+                                 RedirectAttributes redirectAttributes) {
+
+        if(result.hasErrors()) {
+            model.addAttribute("titulo", "Editar Vehículo");
+            model.addAttribute("clientes", clienteService.getAllElements());
+            return "vehiculos/formulario_editar";
+        }
+
+        service.updateElement(vehiculoRequestDTO);
+        redirectAttributes.addFlashAttribute("success", "Vehículo actualizado exitosamente");
+        return "redirect:/vehiculos";
+    }
+
+
 }

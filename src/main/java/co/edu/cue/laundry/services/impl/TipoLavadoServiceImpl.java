@@ -1,9 +1,11 @@
 package co.edu.cue.laundry.services.impl;
 
 import co.edu.cue.laundry.domain.entities.Insumo;
+import co.edu.cue.laundry.domain.entities.Inventario;
 import co.edu.cue.laundry.domain.entities.TipoInsumo;
 import co.edu.cue.laundry.domain.entities.TipoLavado;
 import co.edu.cue.laundry.infrastructure.exception.InsumoException;
+import co.edu.cue.laundry.infrastructure.exception.InventarioException;
 import co.edu.cue.laundry.infrastructure.exception.TipoInsumoException;
 import co.edu.cue.laundry.infrastructure.exception.TipoLavadoException;
 import co.edu.cue.laundry.infrastructure.repository.InsumoRepository;
@@ -60,7 +62,18 @@ public class TipoLavadoServiceImpl implements TipoLavadoService {
 
     @Override
     public TipoLavadoDTO updateElement(TipoLavadoRequestDTO element) {
-        return null;
+        return insumoRepository.findById(element.insumo_id())
+                .map(insumo -> {
+                    TipoLavado dataModification = mapper.mapFromRequestDTO(element);
+                    dataModification.setInsumo(insumo);
+                    try {
+                        TipoLavado savedlavado = repository.save(dataModification);
+                        return mapper.mapFromEntity(savedlavado);
+                    } catch (Exception e) {
+                        throw new TipoLavadoException("Error al guardar el tipo de lavado");
+                    }
+                })
+                .orElseThrow(() -> new InsumoException("insumo no encontrado"));
     }
 
     @Override

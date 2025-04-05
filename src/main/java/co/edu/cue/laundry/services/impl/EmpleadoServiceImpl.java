@@ -49,7 +49,12 @@ public class EmpleadoServiceImpl implements EmpleadoService {
 
     @Override
     public EmpleadoDTO updateElement(EmpleadoRequestDTO element) {
-        return null;
+        try{
+            Empleado dataModified = mapper.mapFromRequestDTO(element);
+            return mapper.mapFromEntity(repository.save(dataModified));
+        }catch(Exception e){
+            throw new EmpleadoException("Error al editar el empleado");
+        }
     }
 
     @Override

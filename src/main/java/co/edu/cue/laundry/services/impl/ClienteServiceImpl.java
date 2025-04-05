@@ -50,7 +50,12 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public ClienteDTO updateElement(ClienteRequestDTO element) {
-        return null;
+        try{
+            Cliente dataModified = mapper.mapFromRequestDTO(element);
+            return mapper.mapFromEntity(repository.save(dataModified));
+        }catch(Exception e){
+            throw new ClienteException("Error al editar el cliente");
+        }
     }
 
     @Override

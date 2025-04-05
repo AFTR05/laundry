@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${titulo}">Editar Empleado</title>
+</head>
+<body>
+<div layout:fragment="content">
+  <div class="card shadow">
+    <div class="card-header bg-primary text-white">
+      <h2 th:text="${titulo}">Editar Empleado</h2>
+    </div>
+
+    <div class="card-body">
+      <form th:action="@{/empleados/editar}" th:object="${empleadoForm}" method="post">
+        <input type="hidden" th:field="*{id}">
+
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Nombre</label>
+            <input type="text" class="form-control" th:field="*{nombre}" required>
+            <div class="text-danger" th:errors="*{nombre}"></div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Apellidos</label>
+            <input type="text" class="form-control" th:field="*{apellidos}" required>
+            <div class="text-danger" th:errors="*{apellidos}"></div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Fecha de Nacimiento</label>
+            <input type="date" class="form-control"
+                   th:name="fechaNacimiento"
+                   th:value="${#temporals.format(empleadoForm.fechaNacimiento, 'yyyy-MM-dd')}" required>
+            <div class="text-danger" th:errors="*{fechaNacimiento}"></div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Estado</label>
+            <select class="form-select" th:field="*{estado}" required>
+              <option value="activo">Activo</option>
+              <option value="inactivo">Inactivo</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="mt-4 d-flex justify-content-end gap-2">
+          <a th:href="@{/empleados}" class="btn btn-secondary">
+            <i class="bi bi-x-circle"></i> Cancelar
+          </a>
+          <button type="submit" class="btn btn-primary">
+            <i class="bi bi-save"></i> Actualizar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>

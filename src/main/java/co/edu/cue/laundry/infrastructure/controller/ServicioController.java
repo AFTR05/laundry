@@ -10,13 +10,16 @@ import co.edu.cue.laundry.services.VehiculoService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -87,4 +90,57 @@ public class ServicioController {
         redirectAttributes.addFlashAttribute("success", "Servicio eliminado exitosamente");
         return "redirect:/servicios";
     }
+
+    @GetMapping("/editar/{id}")
+    public String mostrarFormularioEditar(@PathVariable Integer id, Model model) {
+        ServicioDTO servicioDTO = service.getOneElement(id);
+        ServicioUpdateDTO form = new ServicioUpdateDTO(
+                servicioDTO.id(),
+                servicioDTO.fecha(),
+                servicioDTO.empleadoRecibe().getId(),
+                servicioDTO.empleadoLava().getId(),
+                servicioDTO.tipoVehiculo().getId(),
+                servicioDTO.tipoLavado().getId(),
+                servicioDTO.horaRecibe(),
+                servicioDTO.horaEntrega(),
+                servicioDTO.tipoVehiculo().getPlaca(),
+                servicioDTO.precio(),
+                servicioDTO.estado(),
+                servicioDTO.motivo()
+        );
+        model.addAttribute("servicioForm", form);
+        model.addAttribute("empleados", empleadoService.getAllElements());
+        model.addAttribute("vehiculos",vehiculoService.getAllElements());
+        model.addAttribute("tiposLavado", tipoLavadoService.getAllElements());
+        model.addAttribute("titulo", "Editar Servicio");
+        return "servicios/formulario_editar";
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
+    }
+
+
+    @PostMapping("/editar")
+    public String editarInventario(@Valid @ModelAttribute("servicioForm") ServicioUpdateDTO updateDTO,
+                                   BindingResult result,
+                                   Model model,
+                                   RedirectAttributes redirectAttributes) {
+
+        if (result.hasErrors()) {
+            model.addAttribute("titulo", "Editar Inventario");
+            model.addAttribute("empleados", empleadoService.getAllElements());
+            model.addAttribute("vehiculos",vehiculoService.getAllElements());
+            model.addAttribute("tiposLavado", tipoLavadoService.getAllElements());
+            return "servicios/formulario_editar";
+        }
+
+        service.updateElement(updateDTO);
+        redirectAttributes.addFlashAttribute("success", "Servicio actualizado exitosamente");
+        return "redirect:/servicios";
+    }
+
 }

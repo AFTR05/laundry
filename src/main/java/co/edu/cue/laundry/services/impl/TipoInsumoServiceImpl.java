@@ -1,7 +1,9 @@
 package co.edu.cue.laundry.services.impl;
 
+import co.edu.cue.laundry.domain.entities.Cliente;
 import co.edu.cue.laundry.domain.entities.Servicio;
 import co.edu.cue.laundry.domain.entities.TipoInsumo;
+import co.edu.cue.laundry.infrastructure.exception.ClienteException;
 import co.edu.cue.laundry.infrastructure.exception.InsumoException;
 import co.edu.cue.laundry.infrastructure.exception.ServicioException;
 import co.edu.cue.laundry.infrastructure.exception.TipoInsumoException;
@@ -48,7 +50,12 @@ public class TipoInsumoServiceImpl implements TipoInsumoService {
 
     @Override
     public TipoInsumoDTO updateElement(TipoInsumoRequestDTO element) {
-        return null;
+        try{
+            TipoInsumo dataModified = mapper.mapFromRequestDTO(element);
+            return mapper.mapFromEntity(repository.save(dataModified));
+        }catch(Exception e){
+            throw new TipoInsumoException("Error al editar el tipo de insumo");
+        }
     }
 
     @Override

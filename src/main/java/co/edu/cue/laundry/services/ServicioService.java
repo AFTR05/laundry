@@ -8,6 +8,6 @@ public interface ServicioService {
     List<ServicioDTO> getAllElements();
     ServicioDTO getOneElement(Integer id);
     ServicioDTO createElement(ServicioRequestDTO element);
-    ServicioDTO updateElement(ServicioRequestDTO element);
+    ServicioDTO updateElement(ServicioUpdateDTO element);
     void deleteElement(Integer id);
 }
