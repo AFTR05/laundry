@@ -1,0 +1,71 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${titulo}">Formulario Calificación</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+</head>
+
+<div layout:fragment="content">
+  <div class="card shadow">
+    <div class="card-header bg-primary text-white">
+      <h2 th:text="${titulo}">Formulario de Calificación</h2>
+    </div>
+
+    <div class="card-body">
+      <form th:action="@{/calificacion/guardar}" th:object="${calificacion}" method="post">
+        <input type="hidden" th:field="*{id_servicio}" />
+
+        <div class="row g-3">
+
+          <!-- Tiempo de espera -->
+          <div class="col-md-12">
+            <label for="tiempoEspera" class="form-label">Tiempo de espera</label>
+            <select id="tiempoEspera" class="form-select" th:field="*{tiempoEspera}" required>
+              <option value="" disabled>Seleccione una opción</option>
+              <option value="5">Excelente</option>
+              <option value="4">Muy bueno</option>
+              <option value="3">Regular</option>
+              <option value="2">Deficiente</option>
+              <option value="1">Malo</option>
+            </select>
+          </div>
+
+          <!-- Calidad de atención -->
+          <div class="col-md-12">
+            <label for="calidad" class="form-label">Calidad de atención</label>
+            <select id="calidad" class="form-select" th:field="*{calidad}" required>
+              <option value="" disabled>Seleccione una opción</option>
+              <option value="5">Excelente</option>
+              <option value="4">Muy bueno</option>
+              <option value="3">Regular</option>
+              <option value="2">Deficiente</option>
+              <option value="1">Malo</option>
+            </select>
+          </div>
+
+          <!-- Amabilidad -->
+          <div class="col-md-12">
+            <label for="amabilidad" class="form-label">Amabilidad</label>
+            <select id="amabilidad" class="form-select" th:field="*{amabilidad}" required>
+              <option value="" disabled>Seleccione una opción</option>
+              <option value="5">Excelente</option>
+              <option value="4">Muy bueno</option>
+              <option value="3">Regular</option>
+              <option value="2">Deficiente</option>
+              <option value="1">Malo</option>
+            </select>
+          </div>
+
+        </div>
+
+        <div class="mt-4 d-flex justify-content-end gap-2">
+          <button type="submit" class="btn btn-primary">
+            <i class="bi bi-send"></i> Enviar Calificación
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
