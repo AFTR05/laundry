@@ -3,10 +3,7 @@ package co.edu.cue.laundry.infrastructure.controller;
 import co.edu.cue.laundry.domain.entities.Servicio;
 import co.edu.cue.laundry.infrastructure.utils.ResponseMessageUtil;
 import co.edu.cue.laundry.mapping.dtos.*;
-import co.edu.cue.laundry.services.EmpleadoService;
-import co.edu.cue.laundry.services.ServicioService;
-import co.edu.cue.laundry.services.TipoLavadoService;
-import co.edu.cue.laundry.services.VehiculoService;
+import co.edu.cue.laundry.services.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -37,14 +34,22 @@ public class ServicioController {
     private final EmpleadoService empleadoService;
     private final VehiculoService vehiculoService;
     private final TipoLavadoService tipoLavadoService;
+    private final CalificacionService calificacionService;
 
     @GetMapping
     public String listarServicios(Model model, HttpServletRequest request) {
-        model.addAttribute("activeMenu", "servicios"); // Identificador del menú activo
+        model.addAttribute("activeMenu", "servicios");
         model.addAttribute("servicios", service.getAllElements());
+        model.addAttribute("serviciosCalificados",
+                calificacionService.getAllElements()
+                        .stream()
+                        .map(c -> c.servicio().getId().intValue())
+                        .toList()
+        );
         model.addAttribute("titulo", "Listado de Servicios");
         return "servicios/lista";
     }
+
 
     @GetMapping("/nuevo")
     public String mostrarFormularioNuevo(Model model) {
