@@ -12,10 +12,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 public class MainScreenController {
 
-    @GetMapping
-    public String mostrarPrincipal(Model model, HttpServletRequest request) {
+    @GetMapping("main")
+    public String mostrarPrincipalAdmin(Model model, HttpServletRequest request) {
         model.addAttribute("activeMenu", "main");
         model.addAttribute("titulo", "");
         return "main_screen/index";
+    }
+
+    @GetMapping
+    public String mostrarPrincipal(Model model, HttpServletRequest request) {
+        model.addAttribute("titulo", "");
+        return "main_screen/main";
     }
 }

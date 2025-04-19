@@ -11,7 +11,7 @@ public class Inventario {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "id_insumo", referencedColumnName = "id")
     private Insumo insumo;
 
