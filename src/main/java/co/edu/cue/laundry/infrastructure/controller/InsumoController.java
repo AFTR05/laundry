@@ -1,14 +1,13 @@
 package co.edu.cue.laundry.infrastructure.controller;
 
 import co.edu.cue.laundry.infrastructure.utils.ResponseMessageUtil;
-import co.edu.cue.laundry.mapping.dtos.EmpleadoDTO;
-import co.edu.cue.laundry.mapping.dtos.EmpleadoRequestDTO;
-import co.edu.cue.laundry.mapping.dtos.InsumoDTO;
-import co.edu.cue.laundry.mapping.dtos.InsumoRequestDTO;
+import co.edu.cue.laundry.mapping.dtos.*;
 import co.edu.cue.laundry.services.EmpleadoService;
 import co.edu.cue.laundry.services.InsumoService;
+import co.edu.cue.laundry.services.OfertaInsumoService;
 import co.edu.cue.laundry.services.TipoInsumoService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -30,11 +29,18 @@ import java.util.Map;
 public class InsumoController {
     private final InsumoService service;
     private final TipoInsumoService tipoInsumoService;
+    private final OfertaInsumoService ofertaInsumoService;
 
     @GetMapping
     public String listarInsumos(Model model, HttpServletRequest request) {
         model.addAttribute("activeMenu", "insumos"); // Identificador del menú activo
         model.addAttribute("insumos", service.getAllElements());
+        model.addAttribute("ofertas",
+                ofertaInsumoService.getAllElements()
+                        .stream()
+                        .map(c -> c.insumo().getId())
+                        .toList()
+        );
         model.addAttribute("titulo", "Listado de Insumos");
         return "insumos/lista";
     }
@@ -71,6 +77,15 @@ public class InsumoController {
         model.addAttribute("insumo", insumo);
         model.addAttribute("titulo", "Detalles del Insumo");
         return "insumos/detalle";
+    }
+
+    @GetMapping("/ofertas/{insumoId}")
+    public String listarOfertasInsumos(@PathVariable String insumoId, Model model) {
+        model.addAttribute("ofertasInsumos", ofertaInsumoService.getAllElements().stream().filter(
+                offer -> offer.insumo().getId().equals(insumoId)
+        ));
+        model.addAttribute("titulo", "Listado de ofertas");
+        return "insumos/lista_ofertas";
     }
 
     @PostMapping("/delete/{insumo}")

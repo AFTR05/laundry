@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+  <title th:text="${titulo}">Ofertas de Insumos</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div layout:fragment="content">
+  <div class="card shadow">
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+      <h2 class="mb-0">
+        <i class="bi bi-box-seam"></i> Ofertas de Insumo
+      </h2>
+    </div>
+    <div class="card-body">
+      <div th:replace="~{layout/fragments/mensajes :: mensajes}"></div>
+      <table class="table table-hover">
+        <thead class="table-dark">
+        <tr>
+          <th>ID</th>
+          <th>Insumo</th>
+          <th>Precio</th>
+          <th>Proveedor</th>
+          <th>Celular</th>
+          <th>Correo</th>
+          <th>Direccion</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="oferta : ${ofertasInsumos}">
+          <td th:text="${oferta.id}"></td>
+          <td th:text="${oferta.insumo.nombre}"></td>
+          <td th:text="${oferta.precio}"></td>
+          <td th:text="${oferta.proveedor.nombre}"></td>
+          <td th:text="${oferta.proveedor.celular}"></td>
+          <td th:text="${oferta.proveedor.correo}"></td>
+          <td th:text="${oferta.proveedor.direccion}"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -41,6 +41,11 @@
                class="btn btn-sm btn-info">
               <i class="bi bi-eye"></i>
             </a>
+            <a th:if="${ofertas.contains(insumo.id)}"
+               th:href="@{/insumos/ofertas/{insumoId}(insumoId=${insumo.id})}"
+               class="btn btn-sm btn-light border">
+              <i class="bi bi-ui-checks	"></i>
+            </a>
           </td>
         </tr>
         </tbody>
