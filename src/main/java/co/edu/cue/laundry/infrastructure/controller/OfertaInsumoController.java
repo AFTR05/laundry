@@ -41,7 +41,7 @@ public class OfertaInsumoController {
                 .filter(oferta -> oferta.proveedor().getId().equals(proveedor.id()))
                 .toList();
         model.addAttribute("ofertasInsumos", ofertasProveedor);
-        model.addAttribute("titulo", "Listado de Servicios");
+        model.addAttribute("titulo", "Listado de ofertas");
         return "ofertaInsumo/lista";
     }
 
