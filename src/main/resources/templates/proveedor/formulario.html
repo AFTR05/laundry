@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${titulo}">Registrar proveedor</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div layout:fragment="content">
+  <div class="card shadow">
+    <div class="card-header bg-primary text-white">
+      <h2 th:text="${titulo}">Formulario de Proveedor</h2>
+    </div>
+
+    <div class="card-body">
+      <form th:action="@{/proveedor/guardar}" th:object="${proveedorForm}" method="post">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Nombre Completo</label>
+            <input type="text" class="form-control" th:field="*{nombre}" required>
+            <div class="text-danger" th:errors="*{nombre}"></div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Usuario</label>
+            <input type="text" class="form-control" th:field="*{usuario}" required>
+            <div class="text-danger" th:errors="*{usuario}"></div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Contraseña</label>
+            <input type="password" class="form-control" th:field="*{contrasena}" required>
+            <div class="text-danger" th:errors="*{contrasena}"></div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Correo</label>
+            <input type="email" class="form-control" th:field="*{correo}" required>
+            <div class="text-danger" th:errors="*{correo}"></div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Numero celular</label>
+            <input type="tel" class="form-control" th:field="*{celular}" required>
+            <div class="text-danger" th:errors="*{celular}"></div>
+          </div>
+
+          <div class="col-12">
+            <label class="form-label">Dirección</label>
+            <textarea class="form-control" th:field="*{direccion}" rows="2"></textarea>
+          </div>
+        </div>
+
+        <div class="mt-4 d-flex justify-content-end gap-2">
+          <a th:href="@{/login}" class="btn btn-secondary">
+            <i class="bi bi-x-circle"></i> Cancelar
+          </a>
+          <button type="submit" class="btn btn-primary">
+            <i class="bi bi-save"></i> Guardar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
