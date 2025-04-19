@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="~{layout/fragments/head :: head(${titulo})}">
+  <style>
+    body {
+      padding-top: 0 !important; /* Elimina el padding superior */
+    }
+    .navbar {
+      margin-bottom: 0 !important; /* Elimina margen inferior del navbar */
+    }
+  </style>
+</head>
+
+
+
+<body class="d-flex flex-column min-vh-100">
+<!-- Navbar -->
+<header th:replace="~{layout/fragments/nav_proveedor :: nav}"></header>
+
+<!-- Contenido principal -->
+<main class="flex-grow-1">
+  <div class="container py-4">
+    <!-- Mensajes flash -->
+    <div th:replace="~{layout/fragments/mensajes :: mensajes}"></div>
+    <div layout:fragment="content">
+    </div>
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="bg-dark text-white py-3 mt-4">
+  <div class="container text-center">
+    <p class="mb-0">© 2025 Laundry App - Todos los derechos reservados</p>
+  </div>
+</footer>
+
+<!-- Scripts -->
+<div th:replace="~{layout/fragments/scripts :: scripts}"></div>
+</body>
+</html>

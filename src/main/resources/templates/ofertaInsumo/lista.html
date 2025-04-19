@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/main_proveedor}">
+<head>
+  <title th:text="${titulo}">Ofertas de Insumos</title>
+</head>
+<body>
+<div layout:fragment="content">
+  <div class="card shadow">
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+      <h2 class="mb-0">
+        <i class="bi bi-box-seam"></i> Ofertas de Insumos
+      </h2>
+      <a th:href="@{/ofertaInsumo/nuevo}" class="btn btn-light">
+        <i class="bi bi-plus-circle"></i> Nueva Oferta
+      </a>
+    </div>
+    <div class="card-body">
+      <div th:replace="~{layout/fragments/mensajes :: mensajes}"></div>
+      <table class="table table-hover">
+        <thead class="table-dark">
+        <tr>
+          <th>ID</th>
+          <th>Insumo</th>
+          <th>Precio</th>
+          <th>Proveedor</th>
+          <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="oferta : ${ofertasInsumos}">
+          <td th:text="${oferta.id}"></td>
+          <td th:text="${oferta.insumo.nombre}"></td>
+          <td th:text="${oferta.precio}"></td>
+          <td th:text="${oferta.proveedor.nombre}"></td>
+          <td>
+            <a th:href="@{/ofertaInsumo/ver/{id}(id=${oferta.id})}" class="btn btn-sm btn-info">
+              <i class="bi bi-eye"></i>
+            </a>
+            <a th:href="@{/ofertaInsumo/editar/{id}(id=${oferta.id})}" class="btn btn-sm btn-warning">
+              <i class="bi bi-pencil"></i>
+            </a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</body>
+</html>
